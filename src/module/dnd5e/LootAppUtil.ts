@@ -1,5 +1,5 @@
 export async function GetRollableTables() {
-    const pack = game.packs.get('pf2e.rollable-tables') as Compendium;
+    const pack = game.packs.get('dnd5e.rollable-tables') as Compendium;
     const tables = (await pack.getContent()) as RollTable[];
     return { pack, tables };
 }

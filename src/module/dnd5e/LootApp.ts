@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { MODULE_NAME, PF2E_LOOT_SHEET_NAME } from '../Constants';
+import { MODULE_NAME, DND5E_LOOT_SHEET_NAME } from '../Constants';
 // import Settings from '../settings-app/Settings';
 import { GetItemFromCollection, GetMagicItemTables, GetTreasureTables } from './LootAppUtil';
 import { CREATE_KEY_NONE, CREATE_MODES, CreateMode, IGradeStats, ITEM_GRADES, ITEM_MATERIALS, ITEM_RUNES } from './LootAppData';
@@ -75,7 +75,7 @@ const getMaterialPrice = (bulkString: string, pricePerBulk: number): number => {
 export default function extendLootSheet() {
     type ActorSheetConstructor = new (...args: any[]) => ActorSheet;
     //@ts-ignore
-    const extendMe: ActorSheetConstructor = CONFIG.Actor.sheetClasses['loot'][`pf2e.${PF2E_LOOT_SHEET_NAME}`].cls;
+    const extendMe: ActorSheetConstructor = CONFIG.Actor.sheetClasses['loot'][`dnde.${DND5E_LOOT_SHEET_NAME}`].cls;
     return class LootApp extends extendMe {
         static get defaultOptions() {
             // @ts-ignore
@@ -92,10 +92,10 @@ export default function extendLootSheet() {
         cacheContent: Item[] | undefined;
 
         get template() {
-            const editableSheetPath = `modules/${MODULE_NAME}/templates/pf2e/LootApp.html`;
-            const nonEditableSheetPath = 'systems/pf2e/templates/actors/loot/sheet.html';
+            const editableSheetPath = `modules/${MODULE_NAME}/templates/dnd5e/LootApp.html`;
+            const nonEditableSheetPath = 'systems/dnd5e/templates/actors/loot/sheet.html';
 
-            const isEditable = this.actor.getFlag('pf2e', 'editLoot.value');
+            const isEditable = this.actor.getFlag('dnd5e', 'editLoot.value');
 
             if (isEditable || game.user.isGM) {
                 return editableSheetPath;
@@ -137,7 +137,7 @@ export default function extendLootSheet() {
                 return this.cacheContent;
             }
 
-            const equipment = game.packs.get('pf2e.equipment-srd') as Compendium;
+            const equipment = game.packs.get('dnd5e.equipment-srd') as Compendium;
             this.cacheContent = (await equipment.getContent()) as Item[];
             return this.cacheContent;
         }
@@ -470,7 +470,7 @@ export default function extendLootSheet() {
                 const tableId = button.data('entity-id') as string;
                 const drawCount = Number(button.data('count'));
 
-                const table = (await GetItemFromCollection('pf2e.rollable-tables', tableId)) as RollTable;
+                const table = (await GetItemFromCollection('dnd5e.rollable-tables', tableId)) as RollTable;
 
                 let rolls = await table.drawMany(drawCount);
 
@@ -522,7 +522,7 @@ export default function extendLootSheet() {
                 const tableId = button.data('entity-id') as string;
                 const drawCount = Number(button.data('count'));
 
-                const table = (await GetItemFromCollection('pf2e.rollable-tables', tableId)) as RollTable;
+                const table = (await GetItemFromCollection('dnd5e.rollable-tables', tableId)) as RollTable;
 
                 let rolls = await table.drawMany(drawCount);
                 const promises = rolls.results.map((r) => {
@@ -538,7 +538,7 @@ export default function extendLootSheet() {
 
                 if (filtered.length !== drawCount) {
                     ui.notifications.warn(
-                        'PF2EToolbox drew a custom weapon, custom armor, or typed potion, but these are not supported. One or more rolls has been skipped.',
+                        'dnd5eToolbox drew a custom weapon, custom armor, or typed potion, but these are not supported. One or more rolls has been skipped.',
                     );
                 }
 
