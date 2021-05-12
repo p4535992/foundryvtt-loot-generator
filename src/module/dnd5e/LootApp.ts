@@ -92,7 +92,7 @@ export default function extendLootSheet() {
         cacheContent: Item[] | undefined;
 
         get template() {
-            const editableSheetPath = `modules/${MODULE_NAME}/templates/pf2/LootApp.html`;
+            const editableSheetPath = `modules/${MODULE_NAME}/templates/pf2e/LootApp.html`;
             const nonEditableSheetPath = 'systems/pf2e/templates/actors/loot/sheet.html';
 
             const isEditable = this.actor.getFlag('pf2e', 'editLoot.value');
