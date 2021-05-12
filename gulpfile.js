@@ -1,14 +1,3 @@
-// const gulp = require('gulp');
-// const tasks = require('./gulp.tasks');
-
-// gulp.task('build', tasks.build);
-// gulp.task('rebuild', tasks.rebuild);
-// gulp.task('rewatch', tasks.rewatch);
-// gulp.task('watch', tasks.watch);
-// gulp.task('assets', tasks.assets);
-// gulp.task('clean', tasks.clean);
-// gulp.task('sass', tasks.sass);
-// exports.default = tasks.build;
 const gulp = require('gulp');
 const fs = require('fs-extra');
 const path = require('path');
@@ -151,6 +140,27 @@ function buildTS() {
 }
 
 /**
+ * Build JavaScript
+ */
+ function buildJS() {
+	return gulp.src('src/**/*.js').pipe(gulp.dest('dist'));
+}
+
+/**
+ * Build JavaScript
+ */
+function buildMJS() {
+	return gulp.src('src/**/*.mjs').pipe(gulp.dest('dist'));
+}
+
+/**
+ * Build JavaScript
+ */
+ function buildCSS() {
+	return gulp.src('src/**/*.css').pipe(gulp.dest('dist'));
+}
+
+/**
  * Build Less
  */
 function buildLess() {
@@ -179,9 +189,6 @@ async function copyFiles() {
 		'module.json',
 		'system.json',
 		'template.json',
-		// Added not default
-		'packs',
-		'icons'
 	];
 	try {
 		for (const file of statics) {
@@ -202,6 +209,9 @@ function buildWatch() {
 	gulp.watch('src/**/*.ts', { ignoreInitial: false }, buildTS);
 	gulp.watch('src/**/*.less', { ignoreInitial: false }, buildLess);
 	gulp.watch('src/**/*.scss', { ignoreInitial: false }, buildSASS);
+	gulp.watch('src/**/*.js', { ignoreInitial: false }, buildJS);
+	gulp.watch('src/**/*.mjs', { ignoreInitial: false }, buildMJS);
+	gulp.watch('src/**/*.css', { ignoreInitial: false }, buildCSS);
 	gulp.watch(
 		['src/fonts', 'src/lang', 'src/templates', 'src/*.json'],
 		{ ignoreInitial: false },
@@ -232,10 +242,6 @@ async function clean() {
 			'module.json',
 			'system.json',
 			'template.json',
-			// Added not default
-			'packs',
-			'styles',
-			'icons'
 		);
 	}
 
@@ -505,7 +511,7 @@ function gitTag() {
 
 const execGit = gulp.series(gitAdd, gitCommit, gitTag);
 
-const execBuild = gulp.parallel(buildTS, buildLess, buildSASS, copyFiles);
+const execBuild = gulp.parallel(buildTS, buildJS, buildMJS, buildCSS, buildLess, buildSASS, copyFiles);
 
 exports.build = gulp.series(clean, execBuild);
 exports.watch = buildWatch;
@@ -520,4 +526,3 @@ exports.publish = gulp.series(
 	packageBuild,
 	execGit
 );
-

@@ -1,8 +1,2 @@
-*.swp
-.idea
-node_modules/*
-module/**/*.js
-foundryconfig.json
-old-data.ts
+node_modules
 /dist
-/node_modules

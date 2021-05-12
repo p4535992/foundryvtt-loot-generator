@@ -1,10 +1,11 @@
 {
-    "name": "loot-app-dnd5e",
-    "title": "Loot app dnd5e",
-    "description": "Loot app dnd5e",
-    "version": "1.5.9",
-    "author": "XXX",
+	  "name": "foundryvtt-loot-generator",
+	  "title": "FoundryVTT Loot Generator",
+	  "description": "",
+    "version": "1.0.0",
+    "author": "4535992",
     "type": "module",
+    "socket": true,
     "includes": [
       "./assets/**",
       "./lang/**",
@@ -20,7 +21,7 @@
       {
         "type": "icon",
         "location": ""
-      }, 
+      },
       {
         "type": "cover",
         "location": ""
@@ -30,19 +31,34 @@
         "location": ""
       }
     ],
-    "systems": ["dnd5e"],
+    "languages": [
+      {
+          "lang": "en",
+          "name": "English",
+          "path": "lang/en.json"
+      }
+    ],
     "scripts": [
+
     ],
     "esmodules": [
-        "LootAppDnd5e.js"     
+        "foundryvtt-arms-reach.js"
     ],
     "styles": [
-        "css/loot-app/LootAppDnd5e.css"
+        "styles/foundryvtt-arms-reach.css"
     ],
-    "url": "https://github.com/p4535992/FVTT-PF2EToolbox/tree/master",
-    "manifest": "https://github.com/p4535992/FVTT-PF2EToolbox/raw/master/src/module.json",
-    "download": "https://github.com/p4535992/FVTT-PF2EToolbox/raw/master/loot-app-dnd5e.zip",
-    "minimumCoreVersion": "0.7.6",
+	  "url": "https://github.com/p4535992/foundryvtt-loot-generator",
+ 	  "manifest": "https://raw.githubusercontent.com/p4535992/foundryvtt-loot-generator/main/src/module.json",
+	  "download": "https://raw.githubusercontent.com/p4535992/foundryvtt-loot-generator/main/package/foundryvtt-arms-reach-v1.0.14.zip",
+    "minimumCoreVersion": "0.7.9",
     "compatibleCoreVersion": "0.7.9",
-    "minimumSystemVersion": "1.2.2"
+    "changelog": "https://raw.githubusercontent.com/p4535992/foundryvtt-loot-generator/main/changelog.md",
+    "bugs": "https://github.com/p4535992/foundryvtt-loot-generator/issues",
+    "allowBugReporter": true,
+    "dependencies": [
+      {
+        "name": "lib-wrapper"
+      }
+    ]
+
 }
