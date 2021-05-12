@@ -1,0 +1,38 @@
+div.pf2e-toolbox.loot-app {
+    min-width: 975px;
+
+    section.sidebar.loot-generator-sidebar {
+        width: 300px;
+
+        div.table-row {
+            border-top: 1px solid black;
+
+            button {
+                line-height: unset;
+            }
+
+            p {
+                margin: 0;
+            }
+        }
+    }
+
+    nav.loot-app-nav {
+        & > .item {
+            padding: 4px;
+        }
+    }
+
+    section.content.loot-generator-body {
+        width: calc(100% - 300px);
+        overflow-y: auto;
+    }
+}
+
+// ADDED
+
+.clearfix {
+    content: '';
+    clear: both;
+    display: table;
+}
