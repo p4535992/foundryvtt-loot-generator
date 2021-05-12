@@ -1,15 +1,15 @@
-{{> modules/pf2e-toolbox/templates/loot-app/create/SelectRow.html name="baseItem"
+{{> modules/foundryvtt-loot-generator/templates/pf2/create/SelectRow.html name="baseItem"
         label="Base Item" value=create.baseItem options=create.baseItemOptions}}
 
 {{#if create.baseItem}}
-    {{> modules/pf2e-toolbox/templates/loot-app/create/RuneStats.html level=create.baseItemLevel price=create.baseItemPrice}}
+    {{> modules/foundryvtt-loot-generator/templates/pf2/create/RuneStats.html level=create.baseItemLevel price=create.baseItemPrice}}
 {{/if}}
 
 <h4>Material</h4>
-{{> modules/pf2e-toolbox/templates/loot-app/create/SelectRow.html name="material"
+{{> modules/foundryvtt-loot-generator/templates/pf2/create/SelectRow.html name="material"
         label="Material" value=create.material options=create.materialOptions}}
 
-{{> modules/pf2e-toolbox/templates/loot-app/create/SelectRow.html name="grade"
+{{> modules/foundryvtt-loot-generator/templates/pf2/create/SelectRow.html name="grade"
         label="Grade" value=create.grade options=create.gradeOptions}}
 
 {{#if create.material}}
@@ -26,40 +26,40 @@
 {{/if}}
 
 <h4>Runes</h4>
-{{> modules/pf2e-toolbox/templates/loot-app/create/SelectRow.html name="potency"
+{{> modules/foundryvtt-loot-generator/templates/pf2/create/SelectRow.html name="potency"
         label="Potency" value=create.potency options=create.potencyOptions}}
 
 {{#ifgt create.potency.nId 0}}
-    {{> modules/pf2e-toolbox/templates/loot-app/create/RuneStats.html level=create.potencyLevel price=create.potencyPrice}}
+    {{> modules/foundryvtt-loot-generator/templates/pf2/create/RuneStats.html level=create.potencyLevel price=create.potencyPrice}}
 {{/ifgt}}
 
 {{#ifgt create.potency.nId 0}}
-    {{> modules/pf2e-toolbox/templates/loot-app/create/SelectRow.html name="fundamental"
+    {{> modules/foundryvtt-loot-generator/templates/pf2/create/SelectRow.html name="fundamental"
             label="Fundamental" value=create.fundamental options=create.fundamentalOptions}}
     {{#ifgt create.fundamental.nId 0}}
-        {{> modules/pf2e-toolbox/templates/loot-app/create/RuneStats.html level=create.fundamentalLevel price=create.fundamentalPrice}}
+        {{> modules/foundryvtt-loot-generator/templates/pf2/create/RuneStats.html level=create.fundamentalLevel price=create.fundamentalPrice}}
     {{/ifgt}}
 
-    {{> modules/pf2e-toolbox/templates/loot-app/create/SelectRow.html name="property1"
+    {{> modules/foundryvtt-loot-generator/templates/pf2/create/SelectRow.html name="property1"
             label="Property 1" value=create.property1 options=create.propertyOptions}}
     {{#if create.property1}}
-        {{> modules/pf2e-toolbox/templates/loot-app/create/RuneStats.html level=create.property1Level price=create.property1Price}}
+        {{> modules/foundryvtt-loot-generator/templates/pf2/create/RuneStats.html level=create.property1Level price=create.property1Price}}
     {{/if}}
 {{/ifgt}}
 
 {{#ifgt create.potency.nId 1}}
-    {{> modules/pf2e-toolbox/templates/loot-app/create/SelectRow.html name="property2"
+    {{> modules/foundryvtt-loot-generator/templates/pf2/create/SelectRow.html name="property2"
             label="Property 2" value=create.property2 options=create.propertyOptions}}
     {{#if create.property2}}
-        {{> modules/pf2e-toolbox/templates/loot-app/create/RuneStats.html level=create.property2Level price=create.property2Price}}
+        {{> modules/foundryvtt-loot-generator/templates/pf2/create/RuneStats.html level=create.property2Level price=create.property2Price}}
     {{/if}}
 {{/ifgt}}
 
 {{#ifgt create.potency.nId 2}}
-    {{> modules/pf2e-toolbox/templates/loot-app/create/SelectRow.html name="property3"
+    {{> modules/foundryvtt-loot-generator/templates/pf2/create/SelectRow.html name="property3"
             label="Property 3" value=create.property3 options=create.propertyOptions}}
     {{#if create.property3}}
-        {{> modules/pf2e-toolbox/templates/loot-app/create/RuneStats.html level=create.property3Level price=create.property3Price}}
+        {{> modules/foundryvtt-loot-generator/templates/pf2/create/RuneStats.html level=create.property3Level price=create.property3Price}}
     {{/if}}
 {{/ifgt}}
 
