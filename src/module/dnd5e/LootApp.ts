@@ -557,8 +557,10 @@ export default function extendLootSheet() {
                         item.name = `Unidentified ${newName}`;
                     }
                 }
-                //@ts-ignore
-                await actor.createEmbeddedEntity('OwnedItem', results);
+
+                results.forEach(async item => {
+                  await actor.createEmbeddedEntity('OwnedItem', item);
+                });
 
                 await new Promise((resolve) => setTimeout(resolve, 1000));
             });
