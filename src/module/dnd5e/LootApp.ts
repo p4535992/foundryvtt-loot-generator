@@ -81,7 +81,7 @@ export default function extendLootSheet() {
             // @ts-ignore
             const options = super.defaultOptions;
             options.classes = options.classes ?? [];
-            options.classes = [...options.classes, 'pf2e-toolbox', 'loot-app'];
+            options.classes = [...options.classes, 'foundryvtt-loot-generator', 'loot-app'];
 
             options.tabs = options.tabs ?? [];
             options.tabs = [...options.tabs, { navSelector: '.loot-app-nav', contentSelector: '.loot-app-content', initial: 'create' }];
