@@ -14,9 +14,10 @@
  */
 
 import { MODULE_NAME, PF2E_LOOT_SHEET_NAME } from '../Constants';
-import Settings from '../settings-app/Settings';
+// import Settings from '../settings-app/Settings';
 import { GetItemFromCollection, GetMagicItemTables, GetTreasureTables } from './LootAppUtil';
 import { CREATE_KEY_NONE, CREATE_MODES, CreateMode, IGradeStats, ITEM_GRADES, ITEM_MATERIALS, ITEM_RUNES } from './LootAppData';
+import { FEATURES } from '../settings';
 
 type IMaterials = typeof ITEM_MATERIALS;
 type IMaterial = IMaterials[keyof typeof ITEM_MATERIALS];
@@ -73,6 +74,7 @@ const getMaterialPrice = (bulkString: string, pricePerBulk: number): number => {
 
 export default function extendLootSheet() {
     type ActorSheetConstructor = new (...args: any[]) => ActorSheet;
+    //@ts-ignore
     const extendMe: ActorSheetConstructor = CONFIG.Actor.sheetClasses['loot'][`pf2e.${PF2E_LOOT_SHEET_NAME}`].cls;
     return class LootApp extends extendMe {
         static get defaultOptions() {
@@ -86,11 +88,11 @@ export default function extendLootSheet() {
             return options;
         }
 
-        actor: Actor;
+        //actor: Actor;
         cacheContent: Item[] | undefined;
 
         get template() {
-            const editableSheetPath = `modules/${MODULE_NAME}/templates/loot-app/LootApp.html`;
+            const editableSheetPath = `modules/${MODULE_NAME}/templates/pf2/LootApp.html`;
             const nonEditableSheetPath = 'systems/pf2e/templates/actors/loot/sheet.html';
 
             const isEditable = this.actor.getFlag('pf2e', 'editLoot.value');
@@ -103,23 +105,23 @@ export default function extendLootSheet() {
         }
 
         get createMode(): CreateMode {
-            return this.actor.getFlag(MODULE_NAME, CREATE_MODE) ?? CreateMode.Weapon;
+            return <CreateMode>this.actor.getFlag(MODULE_NAME, CREATE_MODE) ?? CreateMode.Weapon;
         }
 
         get selIteKey(): string {
-            return this.actor.getFlag(MODULE_NAME, KEY_ITE) ?? CREATE_KEY_NONE;
+            return <string>this.actor.getFlag(MODULE_NAME, KEY_ITE) ?? CREATE_KEY_NONE;
         }
         get selMatKey(): string {
-            return this.actor.getFlag(MODULE_NAME, KEY_MAT) ?? CREATE_KEY_NONE;
+            return <string>this.actor.getFlag(MODULE_NAME, KEY_MAT) ?? CREATE_KEY_NONE;
         }
         get selGrdKey(): string {
-            return this.actor.getFlag(MODULE_NAME, KEY_GRD) ?? CREATE_KEY_NONE;
+            return <string>this.actor.getFlag(MODULE_NAME, KEY_GRD) ?? CREATE_KEY_NONE;
         }
         get selPotKey(): string {
-            return this.actor.getFlag(MODULE_NAME, KEY_POT) ?? CREATE_KEY_NONE;
+            return <string>this.actor.getFlag(MODULE_NAME, KEY_POT) ?? CREATE_KEY_NONE;
         }
         get selFunKey(): string {
-            return this.actor.getFlag(MODULE_NAME, KEY_FUN) ?? CREATE_KEY_NONE;
+            return <string>this.actor.getFlag(MODULE_NAME, KEY_FUN) ?? CREATE_KEY_NONE;
         }
 
         async getSelectedItem(): Promise<Item | undefined> {
@@ -347,7 +349,7 @@ export default function extendLootSheet() {
             };
 
             const baseItem = (await this.getSelectedItem()) as Item;
-            const newItemData = duplicate(baseItem?.data) as ItemData;
+            const newItemData = duplicate(baseItem?.data) as Item.Data;
 
             let itemPrice = getItemPrice(baseItem.data.data.price.value);
             let itemLevel = parseInt(baseItem.data.data.level.value);
@@ -406,7 +408,7 @@ export default function extendLootSheet() {
 
             for (let i = 3; i > 0; i--) {
                 const key = `create-property${i}`;
-                const keyRu = this.actor.getFlag(MODULE_NAME, key);
+                const keyRu = <string>this.actor.getFlag(MODULE_NAME, key);
                 if (potencyRune.nId >= i && keyRu !== CREATE_KEY_NONE) {
                     const rune = ITEM_RUNES[this.createMode].property[keyRu];
                     itemName = `${rune.label} ${itemName}`;
@@ -431,7 +433,7 @@ export default function extendLootSheet() {
 
             newItemData.name = itemName;
 
-            if (event.altKey && Settings.get(Settings.FEATURES.QUICK_MYSTIFY)) {
+            if (event.altKey && game.settings.get(MODULE_NAME,FEATURES.QUICK_MYSTIFY)) {
                 newItemData.data.identification = {
                     status: 'unidentified',
                     identified: {
@@ -452,6 +454,7 @@ export default function extendLootSheet() {
             super.activateListeners(html);
 
             html.find('select').on('input', (event) => {
+                //@ts-ignore
                 this._onSubmit(event);
             });
 
@@ -483,20 +486,22 @@ export default function extendLootSheet() {
                     ui.notifications.warn('Found one or more items in the rollable table that do not exist in the compendium, skipping these.');
                 }
 
-                let results = filtered.map((i) => i.data);
+                let results = filtered.map((i:Entity<Entity.Data, Entity.Data>) => i.data);
 
-                results = results.map((i) => {
+                results = results.map((i:Entity.Data) => {
+                    //@ts-ignore
                     if (!i.data.value?.value) {
                         return i;
                     }
-
                     const roll = new Roll('1d4').roll();
+                    //@ts-ignore
                     i.data.value.value = roll.total * i.data.value.value;
                     return i;
                 });
 
-                if (Settings.get(Settings.FEATURES.QUICK_MYSTIFY) && event.altKey) {
+                if (game.settings.get(MODULE_NAME,FEATURES.QUICK_MYSTIFY) && event.altKey) {
                     for (const item of results) {
+                        //@ts-ignore
                         item.data.identification = {
                             status: 'unidentified',
                             identified: {
@@ -507,7 +512,7 @@ export default function extendLootSheet() {
                         item.name = `Unidentified ${newName}`;
                     }
                 }
-
+                //@ts-ignore
                 await actor.createEmbeddedEntity('OwnedItem', results);
             });
             html.find('button.roll-magic-item').on('click', async (event) => {
@@ -539,8 +544,9 @@ export default function extendLootSheet() {
 
                 let results = filtered.map((i) => i.data);
 
-                if (Settings.get(Settings.FEATURES.QUICK_MYSTIFY) && event.altKey) {
+                if (game.settings.get(MODULE_NAME,FEATURES.QUICK_MYSTIFY) && event.altKey) {
                     for (const item of results) {
+                        //@ts-ignore
                         item.data.identification = {
                             status: 'unidentified',
                             identified: {
@@ -551,7 +557,7 @@ export default function extendLootSheet() {
                         item.name = `Unidentified ${newName}`;
                     }
                 }
-
+                //@ts-ignore
                 await actor.createEmbeddedEntity('OwnedItem', results);
 
                 await new Promise((resolve) => setTimeout(resolve, 1000));

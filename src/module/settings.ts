@@ -1,6 +1,7 @@
+import { i18n } from '../foundryvtt-loot-generator';
 
 
-export const MODULE_NAME = 'foundryvtt-arms-reach';
+export const MODULE_NAME = 'foundryvtt-loot-generator';
 
 /**
  * Because typescript doesn't know when in the lifecycle of foundry your code runs, we have to assume that the
@@ -18,8 +19,29 @@ export const MODULE_NAME = 'foundryvtt-arms-reach';
 	return canvas;
 }
 
+export const FEATURES = {
+  // CREATURE_BUILDER: 'CREATURE_BUILDER',
+  // DISABLE_PFS_TAB: 'DISABLE_PFS_TAB',
+  // FLATTEN_PROFICIENCY: 'FLATTEN_PROFICIENCY',
+  // HERO_POINTS: 'ENABLE_HERO_POINTS',
+  // LOOT_APP: 'ENABLE_LOOT_APP',
+  // NPC_SCALER: 'ENABLE_NPC_SCALER',
+  // QUANTITIES: 'ENABLE_QUANTITIES',
+  QUICK_MYSTIFY: 'ENABLE_QUICK_MYSTIFY',
+  // REMOVE_DEFAULT_ART: 'REMOVE_DEFAULT_ART',
+  // ROLL_APP: 'ENABLE_ROLL_APP',
+  // TOKEN_SETUP: 'ENABLE_TOKEN_SETUP',
+};
+
 
 export const registerSettings = function () {
 
-
+	game.settings.register(MODULE_NAME, FEATURES.QUICK_MYSTIFY, {
+    name: i18n(`${MODULE_NAME}.${FEATURES.QUICK_MYSTIFY}`),
+    hint: i18n(`${MODULE_NAME}.${FEATURES.QUICK_MYSTIFY}`),
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean,
+  });
 }
