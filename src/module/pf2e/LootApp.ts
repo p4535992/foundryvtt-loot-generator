@@ -72,7 +72,7 @@ const getMaterialPrice = (bulkString: string, pricePerBulk: number): number => {
     return bulkNumber * pricePerBulk;
 };
 
-export default function extendLootSheet() {
+export default function extendLootSheetPf2e() {
     type ActorSheetConstructor = new (...args: any[]) => ActorSheet;
     //@ts-ignore
     const extendMe: ActorSheetConstructor = CONFIG.Actor.sheetClasses['loot'][`pf2e.${PF2E_LOOT_SHEET_NAME}`].cls;

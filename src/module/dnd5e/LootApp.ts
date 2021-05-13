@@ -72,7 +72,7 @@ const getMaterialPrice = (bulkString: string, pricePerBulk: number): number => {
     return bulkNumber * pricePerBulk;
 };
 
-export default function extendLootSheet() {
+export default function extendLootSheetDnd5e() {
     type ActorSheetConstructor = new (...args: any[]) => ActorSheet;
     //@ts-ignore
     const extendMe: ActorSheetConstructor = CONFIG.Actor.sheetClasses['loot'][`dnde.${DND5E_LOOT_SHEET_NAME}`].cls;
