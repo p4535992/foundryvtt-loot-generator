@@ -4,6 +4,8 @@ This is a tentative to externalize and make system indipendent the loot app of t
 
 THe principal scope of this is make it work with dnd5e system.
 
+# THIS PROJECT IS ABBANDONED IN FAVOR OF [FVTT-PF2ELootGen](https://github.com/Djphoenix719/FVTT-PF2ELootGen)
+
 ## Known issue/Limitation
 
 ## Installation
